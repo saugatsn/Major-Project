@@ -2,18 +2,17 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-app.use((req, res, next) => {
-  req.time = new Date(Date.now()).toString();
-  console.log(req.method, req.hostname, req.path, req.time);
-  next();
+app.use("/api", (req, res, next) => {
+  let { token } = req.query;
+  if (token === "giveaccess") {
+    next();
+  } else {
+    res.send("ACCESS DENIED");
+  }
 });
 
-app.get("/", (req, res) => {
-  res.send("Hi, I am root.");
-});
-
-app.get("/random", (req, res) => {
-  res.send("This is a random page.");
+app.get("/api", (req, res) => {
+  res.send("Data");
 });
 
 app.listen(port, () => {
