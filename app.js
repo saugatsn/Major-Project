@@ -2,13 +2,9 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-app.use((req, res) => {
-  console.log("I am the 1st middleware");
-  next();
-});
-
-app.use((req, res) => {
-  console.log("I am the 2nd middleware");
+app.use((req, res, next) => {
+  req.time = new Date(Date.now()).toString();
+  console.log(req.method, req.hostname, req.path, req.time);
   next();
 });
 
